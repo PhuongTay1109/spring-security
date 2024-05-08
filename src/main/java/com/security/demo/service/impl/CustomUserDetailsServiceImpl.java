@@ -4,17 +4,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.security.demo.model.CustomUserDetails;
+import com.security.demo.model.User;
 import com.security.demo.repository.UserRepository;
 
-public class CustomUserDetailsService implements com.security.demo.service.CustomUserDetailsService {
+public class CustomUserDetailsServiceImpl implements com.security.demo.service.CustomUserDetailsService {
 
 	@Autowired
 	private UserRepository userRepo;
 	
 	@Override
 	public CustomUserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		User user = userRepo.findByEmail(email);
+		if (user == null)
+			throw new UsernameNotFoundException("User not found");
+		return new CustomUserDetails(user);
 	}
 
 }
