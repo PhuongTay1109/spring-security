@@ -46,6 +46,7 @@ public class SecurityConfig {
 				.anyRequest().permitAll()
 		 )
 		.formLogin((form) -> form
+				.loginPage("/login")
 				.usernameParameter("email")
 				.defaultSuccessUrl("/list_users")
 				.permitAll()

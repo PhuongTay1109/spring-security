@@ -29,6 +29,11 @@ public class AppController {
 		return "/home";
 	}
 	
+	@GetMapping("/login")
+	String login() {
+		return "/login";
+	}	
+	
 	@GetMapping("/register") 
 	public String showSignUpForm(Model model) {		
 		model.addAttribute("user", new User());
@@ -54,6 +59,4 @@ public class AppController {
 		model.addAttribute("fullName", userDetails.getFullName());
 		return "/users";
 	}
-	
-
 }
