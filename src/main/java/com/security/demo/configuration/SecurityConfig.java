@@ -2,8 +2,6 @@ package com.security.demo.configuration;
 
 import java.util.Collections;
 
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.security.demo.service.impl.CustomUserDetailsServiceImpl;
+import com.security.demo.service.impl.UserServiceImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -27,7 +25,7 @@ public class SecurityConfig {
 	
 	@Bean
 	UserDetailsService userDetailsService() {
-		return new CustomUserDetailsServiceImpl();
+		return new UserServiceImpl();
 	}
 	
 	@Bean
@@ -41,6 +39,7 @@ public class SecurityConfig {
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
+		.csrf(csrf -> csrf.disable())
 		.authorizeHttpRequests((requests) -> requests
 				.requestMatchers("/list_users").authenticated()
 				.anyRequest().permitAll()
