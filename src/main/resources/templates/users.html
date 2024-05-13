@@ -30,7 +30,7 @@
 				</thead>
 				<tbody>
 					<tr th:each="user:${listUsers}">
-						<td th:text="${user.id}"></td>
+						<td th:text="${user.userId}"></td>
 						<td th:text="${user.email}"></td>
 						<td th:text="${user.firstName}"></td>
 						<td th:text="${user.lastName}"></td>
@@ -38,6 +38,8 @@
 				</tbody>
 			</table>
 		</div>
+		
+		<h3><a th:href="@{/admin/test}">Admin page</a></h3>
 		
 	</div>
 </body>

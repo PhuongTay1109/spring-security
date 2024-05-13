@@ -10,11 +10,13 @@ import org.springframework.stereotype.Repository;
 import com.security.demo.model.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Integer> {
 
 	List<User> findAll();
-	Optional<User> findById(Long id);
+	Optional<User> findById(Integer id);
 	
-	@Query("SELECT u FROM User u WHERE u.email =?1")
-	User findByEmail(String email);
+//	@Query("SELECT u FROM User u WHERE u.email =?1")
+//	User findByEmail(String email);
+	
+	Optional<User> findByEmail(String email);
 }

@@ -2,6 +2,8 @@ package com.security.demo;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -43,7 +45,7 @@ public class UserRepositoryTests {
 	public void testFindUserByEmail() {
 		String email="tuanbeo1@gmail.com";
 		
-		User user = userRepo.findByEmail(email);
+		Optional<User> user = userRepo.findByEmail(email);
 		
 		assertThat(user).isNotNull();
 	}

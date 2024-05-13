@@ -1,5 +1,8 @@
 package com.security.demo.controller;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.security.demo.dto.RegistrationResultDTO;
 import com.security.demo.dto.UserDTO;
+import com.security.demo.model.Provider;
+import com.security.demo.model.Role;
 import com.security.demo.model.User;
+import com.security.demo.service.impl.RoleServiceImpl;
 import com.security.demo.service.impl.UserServiceImpl;
 
 @RestController
@@ -21,6 +27,9 @@ import com.security.demo.service.impl.UserServiceImpl;
 public class ApiController {
 	@Autowired
 	UserServiceImpl userService;
+	
+	@Autowired
+	RoleServiceImpl roleService;
 	
 	@Autowired
 	BCryptPasswordEncoder encoder;
@@ -41,7 +50,10 @@ public class ApiController {
 		String encodedPassword = encoder.encode(user.getPassword());
 	    user.setPassword(encodedPassword);
 	    
-	    User registeredUser = new User(user.getEmail(), user.getPassword(), user.getFirstName(), user.getLastName());
+	    Set<Role> roles = new HashSet<>();
+    	roles.add(roleService.findByAuthority("ROLE_USER").orElseThrow());
+	    
+	    User registeredUser = new User(user.getEmail(), user.getPassword(), user.getFirstName(), user.getLastName(), Provider.LOCAL, roles);
 	    userService.save(registeredUser);
 	    
 	    result.setSuccess(true);

@@ -13,8 +13,8 @@ public interface UserService extends UserDetailsService {
 	public void save(User user);
 	public List<User> findAll();
 	public User findByEmail(String email);
-	public User findById(Long id);
-	public void deleteById(Long id);
+	public User findById(Integer id);
+	public void deleteById(Integer id);
 	
 	@Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException;

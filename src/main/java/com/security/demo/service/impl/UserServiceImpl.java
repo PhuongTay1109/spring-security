@@ -29,29 +29,35 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User findById(Long id) {
+	public User findById(Integer id) {
 		Optional<User> user = userRepository.findById(id);
-		if (user != null)
-			return user.get();
-		return null;
+		if (!user.isPresent()) {
+	        return null;
+	    }
+		return user.get();
 	}
 
 	@Override
-	public void deleteById(Long id) {
+	public void deleteById(Integer id) {
 		userRepository.deleteById(id);
 	}
 
 	@Override
 	public User findByEmail(String email) {
-		return userRepository.findByEmail(email);
+		Optional<User> user = userRepository.findByEmail(email);
+		if (!user.isPresent()) {
+	        return null;
+	    }
+		return user.get();
 	}
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		User user = userRepository.findByEmail(email);
-		if (user == null)
-			throw new UsernameNotFoundException("User not found");
-		return user;
+		Optional<User> user = userRepository.findByEmail(email);
+		if (!user.isPresent()) {
+	        throw new UsernameNotFoundException("User not found with email: " + email);
+	    }
+		return user.get();
 	}
 
 }
