@@ -9,8 +9,8 @@
 </ul>
 <h2>Technologies Used</h2>
 <ul>
-  <li>Spring Boot</li>
-  <li>Spring Security</li>
+  <li>Spring Boot 3</li>
+  <li>Spring Security 6.2.4</li>
   <li>Spring JPA</li>
   <li>Thymeleaf</li>
   <li>MySQL</li>
