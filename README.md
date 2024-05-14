@@ -4,14 +4,13 @@
 <h2>Features</h2>
 <ul>
   <li>User authentication and authorization</li>
-  <li>Login with google or facebook</li>
-  <li>Forget password</li>
+  <li>Login with google and facebook</li>
 </ul>
 <h2>Technologies Used</h2>
 <ul>
   <li>Spring Boot 3</li>
   <li>Spring Security 6.2.4</li>
   <li>Spring JPA</li>
-  <li>Thymeleaf</li>
+  <li>Spring OAuth2 Client</li>
   <li>MySQL</li>
 </ul>
