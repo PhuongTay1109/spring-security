@@ -19,23 +19,26 @@ import com.security.demo.service.impl.UserServiceImpl;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+	@Autowired
+	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
 	@Autowired
-    private BCryptPasswordEncoder bcryptPasswordEncoder;
-	
+	private OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
+
 	@Bean
 	UserDetailsService userDetailsService() {
 		return new UserServiceImpl();
 	}
-	
+
 	@Bean
-    AuthenticationManager authenticationManager() {
-        DaoAuthenticationProvider daoProvider = new DaoAuthenticationProvider();
-        daoProvider.setUserDetailsService(userDetailsService());
-        daoProvider.setPasswordEncoder(bcryptPasswordEncoder);
-        return new ProviderManager(Collections.singletonList(daoProvider));
-    }
-		
+	AuthenticationManager authenticationManager() {
+		DaoAuthenticationProvider daoProvider = new DaoAuthenticationProvider();
+		daoProvider.setUserDetailsService(userDetailsService());
+		daoProvider.setPasswordEncoder(bcryptPasswordEncoder);
+		return new ProviderManager(Collections.singletonList(daoProvider));
+	}
+
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
@@ -51,6 +54,10 @@ public class SecurityConfig {
 				.defaultSuccessUrl("/list_users")
 				.permitAll()
 		)
+		.oauth2Login(oauth2Login ->  oauth2Login
+	            .loginPage("/login")
+	            .successHandler(oAuth2AuthenticationSuccessHandler)
+	    )
 		.logout((logout) -> logout.permitAll());
 		
 		return http.build();
