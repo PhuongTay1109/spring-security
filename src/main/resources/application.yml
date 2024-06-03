@@ -1,5 +1,11 @@
+email:
+  username: truonganhtuan3092@gmail.com
+  password: ckkwnmtyalfzhjjv
 server:
   port: 8181
+  servlet:
+    session:
+      timeout: 30m 
 spring:          
   application:
     name: SpringSecurityDemo

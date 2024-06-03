@@ -42,7 +42,6 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
 	    }
 	    return Provider.UNKNOWN;
 	}
-
 	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -67,9 +66,7 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
 			String fullName = (String) attributes.get("name");
 			String firstName = fullName.split(" ")[0];
 			String lastName = fullName.split(" ")[1];
-			System.out.println(firstName);
-			System.out.println(lastName);
-			
+
 			String password = "";
 			
 			Set<Role> roles = new HashSet<>();

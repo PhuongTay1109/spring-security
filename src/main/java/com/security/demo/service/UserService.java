@@ -1,6 +1,7 @@
 package com.security.demo.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,4 +19,6 @@ public interface UserService extends UserDetailsService {
 	
 	@Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException;
+	
+	public Map<String, Object> resetPassword(Map<String, String> body);
 }

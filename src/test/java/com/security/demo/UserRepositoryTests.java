@@ -43,7 +43,7 @@ public class UserRepositoryTests {
 	
 	@Test
 	public void testFindUserByEmail() {
-		String email="tuanbeo1@gmail.com";
+		String email="tuanbeo111@gmail.com";
 		
 		Optional<User> user = userRepo.findByEmail(email);
 		
