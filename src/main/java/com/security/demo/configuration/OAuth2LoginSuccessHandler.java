@@ -30,4 +30,5 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 		SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 		response.sendRedirect("/list_users");
     }
+   
 }

@@ -61,6 +61,7 @@ public class SecurityConfig {
             .oauth2Login(oauth2Login -> oauth2Login
                 .loginPage("/login")
                 .successHandler(oAuth2LoginSuccessHandler) 
+                // sau này xử lý thêm onAuthentication Failure nữa
             )
             .logout((logout) -> logout.permitAll());
 
