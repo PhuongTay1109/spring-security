@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.security.demo.service.OAuth2CustomService;
+import com.security.demo.service.CustomOAuth2UserService;
 import com.security.demo.service.UserService;
 
 @Configuration
@@ -23,12 +23,12 @@ public class SecurityConfig {
 
     @Autowired
     private BCryptPasswordEncoder bcryptPasswordEncoder;
-
-    @Autowired
-    private OAuth2CustomService oAuth2CustomService;
     
     @Autowired
-    private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+    private CustomOAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+    
+    @Autowired
+    private CustomOAuth2UserService oAuth2UserService;
 
     @Bean
     UserDetailsService userDetailsService() {
@@ -60,9 +60,13 @@ public class SecurityConfig {
             )
             .oauth2Login(oauth2Login -> oauth2Login
                 .loginPage("/login")
+                .userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint
+                        .userService(oAuth2UserService)
+                )
                 .successHandler(oAuth2LoginSuccessHandler) 
-                // sau này xử lý thêm onAuthentication Failure nữa
             )
+            
+            
             .logout((logout) -> logout.permitAll());
 
         return http.build();
