@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.security.demo.model.PasswordResetToken;
 import com.security.demo.model.Provider;
 import com.security.demo.model.User;
-import com.security.demo.service.impl.PasswordResetServiceImpl;
-import com.security.demo.service.impl.UserServiceImpl;
+import com.security.demo.service.PasswordResetService;
+import com.security.demo.service.UserService;
 
 import jakarta.mail.MessagingException;
 
@@ -29,10 +29,10 @@ import jakarta.mail.MessagingException;
 @Controller
 public class AppController {
 	@Autowired
-	private UserServiceImpl userService;	
+	private UserService	 userService;	
 	
 	@Autowired
-	PasswordResetServiceImpl passwordResetTokenService;
+	PasswordResetService passwordResetTokenService;
 	
 	@Autowired
 	PasswordEncoder passwordEncoder;

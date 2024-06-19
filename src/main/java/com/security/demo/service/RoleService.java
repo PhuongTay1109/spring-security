@@ -2,10 +2,25 @@ package com.security.demo.service;
 
 import java.util.Optional;
 
-import com.security.demo.model.Role;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public interface RoleService {
-	public Optional<Role> findByAuthority(String authority);
+import com.security.demo.model.Role;
+import com.security.demo.repository.RoleRepository;
+import com.security.demo.service.RoleService;
+
+@Service
+public class RoleService {
 	
-	public Role save(Role role);
+	@Autowired
+	RoleRepository roleRepository;
+
+	public Optional<Role> findByAuthority(String authority) {		
+		return roleRepository.findByAuthority(authority);
+	}
+
+	public Role save(Role role) {		
+		return roleRepository.save(role);
+	}
+
 }

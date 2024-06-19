@@ -14,53 +14,56 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.security.demo.service.impl.UserServiceImpl;
+import com.security.demo.service.OAuth2CustomService;
+import com.security.demo.service.UserService;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-	@Autowired
-	private BCryptPasswordEncoder bcryptPasswordEncoder;
-	
-	@Autowired
-	private OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
+    @Autowired
+    private BCryptPasswordEncoder bcryptPasswordEncoder;
 
-	@Bean
-	UserDetailsService userDetailsService() {
-		return new UserServiceImpl();
-	}
+    @Autowired
+    private OAuth2CustomService oAuth2CustomService;
+    
+    @Autowired
+    private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
 
-	@Bean
-	AuthenticationManager authenticationManager() {
-		DaoAuthenticationProvider daoProvider = new DaoAuthenticationProvider();
-		daoProvider.setUserDetailsService(userDetailsService());
-		daoProvider.setPasswordEncoder(bcryptPasswordEncoder);
-		return new ProviderManager(Collections.singletonList(daoProvider));
-	}
+    @Bean
+    UserDetailsService userDetailsService() {
+        return new UserService();
+    }
 
-	@Bean
-	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http
-		.csrf(csrf -> csrf.disable())
-		.authorizeHttpRequests((requests) -> requests
-				.requestMatchers("/admin/**").hasRole("ADMIN") // no need prefix ROLE_
-				.requestMatchers("/list_users").authenticated()
-				.anyRequest().permitAll()
-		 )
-		.formLogin((form) -> form
-				.loginPage("/login")
-				.usernameParameter("email")
-				.defaultSuccessUrl("/list_users")
-				.permitAll()
-		)
-		.oauth2Login(oauth2Login ->  oauth2Login
-	            .loginPage("/login")
-	            .successHandler(oAuth2AuthenticationSuccessHandler)
-	    )
-		.logout((logout) -> logout.permitAll());
-		
-		return http.build();
-	}
+    @Bean
+    AuthenticationManager authenticationManager() {
+        DaoAuthenticationProvider daoProvider = new DaoAuthenticationProvider();
+        daoProvider.setUserDetailsService(userDetailsService());
+        daoProvider.setPasswordEncoder(bcryptPasswordEncoder);
+        return new ProviderManager(Collections.singletonList(daoProvider));
+    }
 
+    @Bean
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests((requests) -> requests
+                .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/list_users").authenticated()
+                .anyRequest().permitAll()
+            )
+            .formLogin((form) -> form
+                .loginPage("/login")
+                .usernameParameter("email")
+                .defaultSuccessUrl("/list_users")
+                .permitAll()
+            )
+            .oauth2Login(oauth2Login -> oauth2Login
+                .loginPage("/login")
+                .successHandler(oAuth2LoginSuccessHandler) 
+            )
+            .logout((logout) -> logout.permitAll());
+
+        return http.build();
+    }
 }

@@ -12,7 +12,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 @Configuration
 public class MailConfiguration {
 	@Autowired
-	private Environment env; //Get property from applicaiton.yml
+	private Environment env; //Get property from application.yml
 
 	@Bean
 	JavaMailSender javaMailSender() {

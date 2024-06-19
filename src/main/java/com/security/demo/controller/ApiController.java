@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,17 +18,17 @@ import com.security.demo.dto.UserDTO;
 import com.security.demo.model.Provider;
 import com.security.demo.model.Role;
 import com.security.demo.model.User;
-import com.security.demo.service.impl.RoleServiceImpl;
-import com.security.demo.service.impl.UserServiceImpl;
+import com.security.demo.service.RoleService;
+import com.security.demo.service.UserService;
 
 @RestController
 @RequestMapping("/api")
 public class ApiController {
 	@Autowired
-	UserServiceImpl userService;
+	UserService userService;
 	
 	@Autowired
-	RoleServiceImpl roleService;
+	RoleService roleService;
 	
 	@Autowired
 	BCryptPasswordEncoder encoder;
